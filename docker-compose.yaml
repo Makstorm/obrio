@@ -14,9 +14,29 @@ services:
     volumes:
       - .:/usr/src/app
 
+  notifications:
+    build:
+      context: .
+      dockerfile: ./apps/notifications/Dockerfile
+      target: development
+    command: pnpm run start:dev notifications
+    depends_on:
+      - redis
+    env_file:
+      - ./apps/notifications/.env
+    ports:
+      - '3002:3002'
+    volumes:
+      - .:/usr/src/app
+
   postgres:
     image: postgres
     ports:
       - '5432:5432'
     environment:
       POSTGRES_PASSWORD: postgres
+
+  redis:
+    image: redis
+    ports:
+      - '6379:6379'
