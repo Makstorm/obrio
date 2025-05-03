@@ -8,5 +8,9 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@nestjs/bullmq": "^11.0.2",
+    "bullmq": "^5.52.1"
+  }
 }
