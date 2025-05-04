@@ -1,6 +1,9 @@
-# 🧱 NestJS Project
+# 🧱 Obrio Project
 
-A backend application built using **NestJS**, designed to be scalable, modular, and easy to maintain. This project serves as a starting point for building RESTful APIs with TypeScript, structured routing, layered architecture, and environment-based configuration.
+A scalable backend application built with NestJS and designed around a microservice architecture.  
+It leverages asynchronous communication and delayed task scheduling to coordinate background processes seamlessly.
+
+The system is modular, secure, and production-ready — well-suited for event-driven workflows and real-world business logic.
 
 ---
 
@@ -183,8 +186,13 @@ Require the `Authentication` cookie
 }
 ```
 
-After a successful response from POST `/users`, the application triggers a message that is sent via **RabbitMQ** to notifications microservice.
-The notifications microservice will handle that event and register a scheduled job with will be store inside of redis service powered by BullMq module, and when 24 hours passes from that time the job will be executed whic leads to the sending mock push notification which api was specified before in `WEBHOOK_SITE_URL` env variable
+## 🔔 Notifications Flow
+
+After a successful response from `POST /users`, the application sends a message via **RabbitMQ** to the **notifications microservice**.
+
+The notifications microservice handles this event by registering a **delayed job** using the **BullMQ** module. This job is stored in Redis and scheduled to run **24 hours later**.
+
+Once the delay has passed, the job is executed and triggers a **mock push notification** to the API specified in the `WEBHOOK_SITE_URL` environment variable.
 
 ## ✅ Summary
 
