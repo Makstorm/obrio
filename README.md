@@ -60,6 +60,8 @@ WEBHOOK_SITE_URL=write you url from the https://webhook.site
 
 ### 3. Start the application
 
+From the root folder run following command (demands installed docker)
+
 ```bash
 docker-compose up
 ```
@@ -179,10 +181,8 @@ Require the `Authentication` cookie
 
 ```json
 {
-  {
-    "message": "Unauthorized",
-    "statusCode": 401
-}
+  "message": "Unauthorized",
+  "statusCode": 401
 }
 ```
 
