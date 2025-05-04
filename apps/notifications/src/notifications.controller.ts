@@ -11,7 +11,9 @@ export class NotificationsController {
 
   @UsePipes(new ValidationPipe())
   @EventPattern(NOTIFICATIONS_QUEUE_EVENTS.NEW_USER_NOTIFICATION)
-  public async userCreatedEvent(@Payload() data: UserCreatedPayload) {
+  public async userCreatedEvent(
+    @Payload() data: UserCreatedPayload,
+  ): Promise<void> {
     this.notificationsService.scheduleNotification({
       notificationType: NotificationType.PUSH,
       payload: data,

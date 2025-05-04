@@ -10,13 +10,13 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  public async createUser(@Body() createUserDto: CreateUserDto) {
+  public async createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.usersService.createUser(createUserDto);
   }
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  async getUser(@CurrentUser() user: User) {
+  public async getUser(@CurrentUser() user: User): Promise<User> {
     return user;
   }
 }

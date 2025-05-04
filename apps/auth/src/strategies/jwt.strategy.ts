@@ -4,6 +4,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { UsersService } from '../users/users.service';
 import { PassportStrategy } from '@nestjs/passport';
 import { ITokenPayload } from '../interfaces/token-payload.interface';
+import { User } from '.prisma/client';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -19,7 +20,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  public async validate({ userId }: ITokenPayload) {
+  public async validate({ userId }: ITokenPayload): Promise<User> {
     return this.usersService.getUser({ id: userId.toString() });
   }
 }

@@ -12,7 +12,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  public async login(user: User, res: Response) {
+  public async login(user: User, res: Response): Promise<string> {
     const tokenPayload: ITokenPayload = {
       userId: user.id,
     };

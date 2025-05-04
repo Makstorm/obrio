@@ -13,7 +13,9 @@ export class NotificationsService {
     private readonly notificationsQueue: Queue,
   ) {}
 
-  public async scheduleNotification(payload: ScheduleNotificationDto) {
+  public async scheduleNotification(
+    payload: ScheduleNotificationDto,
+  ): Promise<void> {
     try {
       this.notificationsQueue.add('notification', payload, {
         delay: 1000 * 60 * 60 * 24, // 24 hours

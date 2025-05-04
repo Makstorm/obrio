@@ -13,7 +13,7 @@ export class SenderService {
     private readonly configService: ConfigService,
   ) {}
 
-  public async sendNotification(dto: SendNotificationDto) {
+  public async sendNotification(dto: SendNotificationDto): Promise<void> {
     try {
       const { data } = await firstValueFrom(
         this.httpService.post(this.configService.get('WEBHOOK_SITE_URL'), dto),

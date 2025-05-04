@@ -14,22 +14,30 @@ export class NotificationsWorker extends WorkerHost {
     super();
   }
 
-  public async process(job: Job<ScheduleNotificationDto, unknown, string>) {
+  public async process(
+    job: Job<ScheduleNotificationDto, unknown, string>,
+  ): Promise<void> {
     this.senderService.sendNotification({ ...job.data, jobId: job.id });
   }
 
   @OnWorkerEvent('active')
-  public async onActive(job: Job<ScheduleNotificationDto, unknown, string>) {
+  public async onActive(
+    job: Job<ScheduleNotificationDto, unknown, string>,
+  ): Promise<void> {
     this.logger.log(`Processing job with id ${job.id}`);
   }
 
   @OnWorkerEvent('completed')
-  public async onCompleted(job: Job<ScheduleNotificationDto, unknown, string>) {
+  public async onCompleted(
+    job: Job<ScheduleNotificationDto, unknown, string>,
+  ): Promise<void> {
     this.logger.log(`Job with id ${job.id} COMPLETED!`);
   }
 
   @OnWorkerEvent('failed')
-  public async onFailed(job: Job<ScheduleNotificationDto, unknown, string>) {
+  public async onFailed(
+    job: Job<ScheduleNotificationDto, unknown, string>,
+  ): Promise<void> {
     this.logger.error(
       `Job with id ${job.id} FAILED! Attempt Number ${job.attemptsMade}`,
     );

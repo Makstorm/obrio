@@ -14,6 +14,7 @@ import {
   IUserCreatedPayload,
 } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { User } from '.prisma/client';
 
 @Injectable()
 export class UsersService {
@@ -23,7 +24,7 @@ export class UsersService {
     private readonly notificationsService: ClientProxy,
   ) {}
 
-  public async createUser(createUserDto: CreateUserDto) {
+  public async createUser(createUserDto: CreateUserDto): Promise<User> {
     await this.validateCreateUserDto(createUserDto);
     try {
       const newUser = await this.prismaService.user.create({
@@ -47,7 +48,9 @@ export class UsersService {
     }
   }
 
-  private async validateCreateUserDto(createUserDto: CreateUserDto) {
+  private async validateCreateUserDto(
+    createUserDto: CreateUserDto,
+  ): Promise<void> {
     try {
       await this.prismaService.user.findFirstOrThrow({
         where: { email: createUserDto.email },
@@ -61,7 +64,7 @@ export class UsersService {
     );
   }
 
-  public async verifyUser(email: string, password: string) {
+  public async verifyUser(email: string, password: string): Promise<User> {
     try {
       const user = await this.prismaService.user.findFirstOrThrow({
         where: { email },
@@ -82,7 +85,7 @@ export class UsersService {
     }
   }
 
-  public async getUser(getUserDto: GetUserDto) {
+  public async getUser(getUserDto: GetUserDto): Promise<User> {
     return this.prismaService.user.findUniqueOrThrow({
       where: { id: +getUserDto.id },
     });

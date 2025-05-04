@@ -13,14 +13,17 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  public async login(@CurrentUser() user: User, @Res() res: Response) {
+  public async login(
+    @CurrentUser() user: User,
+    @Res() res: Response,
+  ): Promise<void> {
     await this.authService.login(user, res);
     res.send(user);
   }
 
   @UseGuards(JwtAuthGuard)
   @MessagePattern('authenticate')
-  public async authenticate(@Payload() data: any) {
+  public async authenticate(@Payload() data: any): Promise<User> {
     return data.user;
   }
 }
