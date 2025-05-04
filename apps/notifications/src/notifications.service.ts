@@ -18,6 +18,9 @@ export class NotificationsService {
       this.notificationsQueue.add('notification', payload, {
         delay: 1000 * 60 * 60 * 24, // 24 hours
       });
+      this.logger.log(
+        `Notification scheduled successfully, payload: ${payload}`,
+      );
     } catch (err) {
       this.logger.error('Error scheduling notification', err);
     }

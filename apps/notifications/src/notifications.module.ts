@@ -16,7 +16,7 @@ import { NotificationsWorker } from './notifications.worker';
         REDIS_HOST: Joi.string().required(),
         REDIS_PORT: Joi.number().required(),
         HTTP_PORT: Joi.number().required(),
-        TCP_PORT: Joi.number().required(),
+        RABBITMQ_URL: Joi.string().required(),
         WEBHOOK_SITE_URL: Joi.string().required(),
       }),
     }),
