@@ -1,0 +1,18 @@
+{
+  "name": "notifications",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nestjs/axios": "^4.0.0",
+    "@nestjs/bullmq": "^11.0.2",
+    "axios": "^1.9.0",
+    "bullmq": "^5.52.1"
+  }
+}
