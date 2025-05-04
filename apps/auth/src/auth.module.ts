@@ -19,6 +19,8 @@ import { JwtStrategy } from './strategies/jwt.strategy';
         JWT_EXPIRES_IN: Joi.number().required(),
         HTTP_PORT: Joi.number().required(),
         RABBITMQ_URL: Joi.string().required(),
+        NOTIFICATIONS_HOST: Joi.string().required(),
+        NOTIFICATIONS_PORT: Joi.number().required(),
       }),
     }),
     JwtModule.registerAsync({
