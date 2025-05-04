@@ -62,16 +62,24 @@ export class UsersService {
   }
 
   public async verifyUser(email: string, password: string) {
-    const user = await this.prismaService.user.findFirstOrThrow({
-      where: { email },
-    });
+    try {
+      const user = await this.prismaService.user.findFirstOrThrow({
+        where: { email },
+      });
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+
+      if (!isPasswordValid) {
+        throw new UnauthorizedException('Invalid credentials');
+      }
+
+      return user;
+    } catch (err) {
+      if (err instanceof UnauthorizedException) {
+        throw err;
+      }
       throw new UnauthorizedException('Invalid credentials');
     }
-
-    return user;
   }
 
   public async getUser(getUserDto: GetUserDto) {
