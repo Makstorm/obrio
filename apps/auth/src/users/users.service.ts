@@ -8,7 +8,11 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { GetUserDto } from './dto/get-user.dto';
 import { PrismaService } from '../prisma.service';
 import * as bcrypt from 'bcryptjs';
-import { NOTIFICATIONS_SERVICE, NOTIFICATIONS_QUEUE_EVENTS } from '@app/common';
+import {
+  NOTIFICATIONS_SERVICE,
+  NOTIFICATIONS_QUEUE_EVENTS,
+  IUserCreatedPayload,
+} from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
@@ -29,9 +33,10 @@ export class UsersService {
         },
       });
 
-      this.notificationsService.emit(
+      this.notificationsService.emit<unknown, IUserCreatedPayload>(
         NOTIFICATIONS_QUEUE_EVENTS.NEW_USER_NOTIFICATION,
         {
+          userId: newUser.id,
           email: newUser.email,
         },
       );
