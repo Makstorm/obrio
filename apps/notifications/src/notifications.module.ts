@@ -5,6 +5,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { LoggerModule, PUSH_NOTIFICATIONS_QUEUE } from '@app/common';
 import { BullModule } from '@nestjs/bullmq';
+import { SenderModule } from './sender/sender.module';
+import { NotificationsWorker } from './notifications.worker';
 
 @Module({
   imports: [
@@ -35,8 +37,9 @@ import { BullModule } from '@nestjs/bullmq';
     }),
     BullModule.registerQueue({ name: PUSH_NOTIFICATIONS_QUEUE }),
     LoggerModule,
+    SenderModule,
   ],
   controllers: [NotificationsController],
-  providers: [NotificationsService],
+  providers: [NotificationsService, NotificationsWorker],
 })
 export class NotificationsModule {}

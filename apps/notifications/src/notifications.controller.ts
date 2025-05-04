@@ -3,6 +3,7 @@ import { NotificationsService } from './notifications.service';
 import { EventPattern, Payload } from '@nestjs/microservices';
 import { NOTIFICATIONS_QUEUE_EVENTS } from '@app/common';
 import { UserCreatedPayload } from './dto/user-created-payload.dto';
+import { NotificationType } from './enums/notification-type.enum';
 
 @Controller()
 export class NotificationsController {
@@ -11,6 +12,9 @@ export class NotificationsController {
   @UsePipes(new ValidationPipe())
   @EventPattern(NOTIFICATIONS_QUEUE_EVENTS.NEW_USER_NOTIFICATION)
   public async userCreatedEvent(@Payload() data: UserCreatedPayload) {
-    console.log('Mock new user notification event:', data);
+    this.notificationsService.scheduleNotification({
+      notificationType: NotificationType.PUSH,
+      payload: data,
+    });
   }
 }
